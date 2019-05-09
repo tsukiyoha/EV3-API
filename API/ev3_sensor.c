@@ -274,6 +274,9 @@ void* ReadSensorData(int sensorPort)
 			return readIicSensor(sensorPort);
 		case NXT_TEMP_F:
 			return readIicSensor(sensorPort);
+			/* COMPASS_SENSOR */
+		case COMPASS_SENSOR_HIT:
+            		return readIicSensor(sensorPort);
 		default: return 0;
 	}
 
@@ -372,6 +375,9 @@ int ReadSensor(int sensorPort)
 				return (-1)*(((help>>4) & 0xFF)*10 + ((help & 0xF) * 10 / 15)) * 9/5 + 320;
 			}
 			return (((help>>4) & 0xFF)*10 + ((help & 0xF) * 10 / 15)) * 9/5 + 320;
+				//COMPASS_SENSOR
+		case COMPASS_SENSOR_HIT :
+		     return *((DATA16*)data)&0x00FF;
 		default: break;
 	}
 	return *((DATA16*)data);
@@ -547,6 +553,12 @@ int SetAllSensorMode(int name_1, int name_2, int name_3, int name_4)
 				devCon.Connection[sensorPort] 	= CONN_NXT_IIC;
 				devCon.Type[sensorPort] 		= NXT_TEMP_TYPE;
 				devCon.Mode[sensorPort] 		= NXT_TEMP_F_MODE;
+				break;
+			//compass sensor
+			case COMPASS_SENSOR_HIT :
+				devCon.Connection[sensorPort] 	= CONN_NXT_IIC;
+				devCon.Type[sensorPort] 		= IIC_TYPE;
+				devCon.Mode[sensorPort] 		= IIC_BYTE_MODE;
 				break;
 			default: return -1;
 		}

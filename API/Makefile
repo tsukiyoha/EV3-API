@@ -1,5 +1,10 @@
 ## Copyright (c) 2015 Ahmad Fatoum
-CROSS_COMPILE ?= C:/CSLite/bin/arm-none-linux-gnueabi-
+ifeq ($(OS),Windows_NT)
+	CROSS_COMPILE ?= C:/CSLite/bin/arm-none-linux-gnueabi-
+else
+	CROSS_COMPILE ?= arm-none-linux-gnueabi-
+endif
+
 PREFIX ?= $(CROSS_COMPILE)
 CC = $(PREFIX)gcc
 AR = $(PREFIX)ar

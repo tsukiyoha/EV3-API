@@ -103,6 +103,9 @@ int SetIRBeaconCH(int sensorPort, int channel);
 #define IR_SEEK 11		// Seek
 #define IR_REMOTE 12	// Remote Control
 
+// HITechnic compass sensor ( the value may be modified to the 30 and up)
+#define COMPASS_SENSOR_HIT 13
+
 //NXT 
 #define NXT_IR_SEEKER 20 // Infrared Seeker
 #define NXT_TEMP_C 21 	// Temperature in C
