@@ -105,6 +105,7 @@ int SetIRBeaconCH(int sensorPort, int channel);
 
 // HITechnic compass sensor ( the value may be modified to the 30 and up)
 #define COMPASS_SENSOR_HIT 13
+#define GYRO_SENSOR_HIT 14
 
 //NXT 
 #define NXT_IR_SEEKER 20 // Infrared Seeker

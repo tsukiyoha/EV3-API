@@ -274,9 +274,13 @@ void* ReadSensorData(int sensorPort)
 			return readIicSensor(sensorPort);
 		case NXT_TEMP_F:
 			return readIicSensor(sensorPort);
+		/* HiTechnic */
 			/* COMPASS_SENSOR */
 		case COMPASS_SENSOR_HIT:
             		return readIicSensor(sensorPort);
+            		/* GYRO_SENSOR */
+		case GYRO_SENSOR_HIT:
+			return readOldDumbSensor(sensorPort);
 		default: return 0;
 	}
 
@@ -378,6 +382,8 @@ int ReadSensor(int sensorPort)
 				//COMPASS_SENSOR
 		case COMPASS_SENSOR_HIT :
 		     return *((DATA16*)data)&0x00FF;
+		case GYRO_SENSOR_HIT :
+		     return *((DATA16*)data);
 		default: break;
 	}
 	return *((DATA16*)data);
@@ -559,6 +565,12 @@ int SetAllSensorMode(int name_1, int name_2, int name_3, int name_4)
 				devCon.Connection[sensorPort] 	= CONN_NXT_IIC;
 				devCon.Type[sensorPort] 		= IIC_TYPE;
 				devCon.Mode[sensorPort] 		= IIC_BYTE_MODE;
+				break;
+			//gyroscopic sensor
+			case GYRO_SENSOR_HIT :
+				devCon.Connection[sensorPort] 	= CONN_INPUT_DUMB;
+				devCon.Type[sensorPort] 		= GYRO_TYPE; // Adding a specific type for this sensor might be more appropriate
+				devCon.Mode[sensorPort] 		= GYRO_RATE_MODE; // Adding a specific type for this sensor might be more appropriate
 				break;
 			default: return -1;
 		}
