@@ -232,6 +232,24 @@ char RectOutEx(int x, int y, int width, int height, unsigned long options);
 char EllipseOutEx(int x, int y, uint8_t radiusX, uint8_t radiusY, unsigned long options);
 #define EllipseOut(_x, _y, _rx, _ry) EllipseOutEx((_x), (_y), (_rx), (_ry), DRAW_OPT_NORMAL)
 
+/**
+ * Draw a polygon.
+ * This function lets you draw aa polygon on the screen using an array of points.
+ * Optionally specify drawing options. If this argument is not specified
+ * it defaults to \ref DRAW_OPT_NORMAL.Valid display option constants are listed
+ * in the \ref DisplayDrawOptionConstants group.
+ * \sa SysDrawPolygon, DrawPolygonType
+ *
+ * \warning This function requires the enhanced NBC/NXC firmware version 1.28+.
+ *
+ * \param points An array of LocationType points that define the polygon.
+ * \param options The drawing options.
+ * \return The result of the drawing operation.
+
+ */
+char PolyOutEx(LocationType points[], unsigned int count, unsigned long options);
+#define PolyOut(_points, _count) PolyOutEx((_points), (_count), DRAW_OPT_NORMAL)
+
 bool LcdTextf(char Color, short X, short Y, const char *fmt, ...);
 int LcdPrintf(char __color, const char * __fmt, ...);
 

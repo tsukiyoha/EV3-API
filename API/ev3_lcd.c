@@ -48,6 +48,7 @@
 #define MAX(a,b)    (((a>b) ? (a) : (b)))
 #define MIN(a,b)    (((a<b) ? (a) : (b)))
 
+
 uint8_t hwBuffer[LCD_BUFFER_LENGTH];
 
 uint8_t PixelTab[] = {
@@ -1628,6 +1629,19 @@ void CmdDrawCircle(int cx, int cy, int radius, uint8_t PixelMode, uint8_t FillMo
 	CmdDrawEllipse(cx, cy, radius, radius, PixelMode, FillMode);
 }
 
+void CmdDrawPoly(LocationType points[], unsigned int count, uint8_t PixelMode, uint8_t FillMode)
+{
+	int i;
+	for(i = 0; i < count ; i++){
+		LcdPrintf(1,"X : %d, Y : %d\n", points[i].X, points[i].Y);
+	}
+	Wait(SEC_2);
+	Ev3Clear();
+	for(i = 0; i < count; i++){
+		CmdDrawLine(points[i].X, points[i].Y, points[(i+1)%count].X, points[(i+1)%count].Y, PixelMode);
+	}
+}
+
 char CircleOutEx(int x, int y, uint8_t radius, unsigned long options)
 {
 	if (!LcdInitialized())
@@ -1678,6 +1692,17 @@ char EllipseOutEx(int x, int y, uint8_t radiusX, uint8_t radiusY, unsigned long 
 	return 0;
 }
 
+char PolyOutEx(LocationType points[], unsigned int count, unsigned long options)
+{
+	if (!LcdInitialized())
+		return 1;
+	uint8_t pixelMode, fillMode;
+	if(count <=0)
+		return 1;
+	if (CmdResolveDrawingMode(options, &pixelMode, &fillMode))
+		CmdDrawPoly(points, count, pixelMode, fillMode);
+	return 0;
+}
 
 /*******************
  * Redundant functions
