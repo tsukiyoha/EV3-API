@@ -281,6 +281,13 @@ void* ReadSensorData(int sensorPort)
             		/* GYRO_SENSOR */
 		case GYRO_SENSOR_HIT:
 			return readOldDumbSensor(sensorPort);
+			/* ANGLE_SENSOR */
+		case ANGLE_SENSOR_HIT:
+            		return ReadAngleSensor(sensorPort);
+            		//return readIicSensor(sensorPort);
+            	case BARO_SENSOR_HIT:
+            		return ReadAngleSensor(sensorPort);
+            		//return readIicSensor(sensorPort);
 		default: return 0;
 	}
 
@@ -383,7 +390,11 @@ int ReadSensor(int sensorPort)
 		case COMPASS_SENSOR_HIT :
 		     return *((DATA16*)data)&0x00FF;
 		case GYRO_SENSOR_HIT :
-		     return *((DATA16*)data);
+		     return *((DATA16*)data)-2480;
+		case ANGLE_SENSOR_HIT :
+		     return *(data);
+		case BARO_SENSOR_HIT :
+		     return *(data);
 		default: break;
 	}
 	return *((DATA16*)data);
@@ -572,6 +583,18 @@ int SetAllSensorMode(int name_1, int name_2, int name_3, int name_4)
 				devCon.Type[sensorPort] 		= GYRO_TYPE; // Adding a specific type for this sensor might be more appropriate
 				devCon.Mode[sensorPort] 		= GYRO_RATE_MODE; // Adding a specific type for this sensor might be more appropriate
 				break;
+			//angle sensor
+			case ANGLE_SENSOR_HIT :
+				devCon.Connection[sensorPort] 	= CONN_NXT_IIC;
+				devCon.Type[sensorPort] 		= IIC_TYPE;
+				devCon.Mode[sensorPort] 		= IIC_BYTE_MODE;
+				break;
+			//barometric sensor
+			case BARO_SENSOR_HIT :
+				devCon.Connection[sensorPort] 	= CONN_NXT_IIC;
+				devCon.Type[sensorPort] 		= IIC_TYPE;
+				devCon.Mode[sensorPort] 		= IIC_BYTE_MODE;
+				break;
 			default: return -1;
 		}
 	}
@@ -597,4 +620,30 @@ int SetIRBeaconCH(int sensorPort, int channel)
 }
 
 
+/********************************************************************************************/
+/**
+* Getting angle sensor data
+* author: Simion Josselin
+* note: test function
+*
+*/
+
+void* ReadAngleSensor(int sensorPort)
+{
+	if (!g_iicSensors)
+		return 0;
+	uint16_t currentSensorSlot = g_iicSensors->Actual[sensorPort];
+	uint64_t* data = (uint64_t *)g_iicSensors->Raw[sensorPort][currentSensorSlot];
+	
+	LcdPrintf(1,"octet 0: %d\n", *(data) & 0xFF);
+	LcdPrintf(1,"octet 1: %d\n", (*(data)>>8) & 0xFF);
+	LcdPrintf(1,"octet 2: %d\n", (*(data)>>16) & 0xFF);
+	LcdPrintf(1,"octet 3: %d\n", (*(data)>>24) & 0xFF);
+	LcdPrintf(1,"octet 4: %d\n", (*(data)>>32) & 0xFF);
+	LcdPrintf(1,"octet 5: %d\n", (*(data)>>40) & 0xFF);
+	LcdPrintf(1,"octet 6: %d\n", (*(data)>>48) & 0xFF);
+	LcdPrintf(1,"octet 7: %d\n", (*(data)>>56) & 0xFF);
+	return g_iicSensors->Raw[sensorPort][currentSensorSlot];
+	
+}
 

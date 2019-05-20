@@ -78,6 +78,14 @@ int SetAllSensorMode(int name_1, int name_2, int name_3, int name_4);
  */
 int SetIRBeaconCH(int sensorPort, int channel);
 
+/**
+* Getting angle sensor data
+* author: Simion Josselin
+* note: test function
+*
+*/
+void* ReadAngleSensor(int sensorPort);
+
 /***********************************/
 // Sensor Names
 #define NO_SEN -1		// No sensor connected
@@ -106,6 +114,8 @@ int SetIRBeaconCH(int sensorPort, int channel);
 // HITechnic compass sensor ( the value may be modified to the 30 and up)
 #define COMPASS_SENSOR_HIT 13
 #define GYRO_SENSOR_HIT 14
+#define ANGLE_SENSOR_HIT 15
+#define BARO_SENSOR_HIT 16
 
 //NXT 
 #define NXT_IR_SEEKER 20 // Infrared Seeker
