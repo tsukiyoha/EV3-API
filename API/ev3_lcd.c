@@ -1704,6 +1704,28 @@ char PolyOutEx(LocationType points[], unsigned int count, unsigned long options)
 	return 0;
 }
 
+char TextOutEx(int x, int y, char* str, unsigned long options)
+{
+	int color = (options == DRAW_OPT_NORMAL)? 1 : 0;
+	return LcdText(color, x, y, str);
+}
+
+char IntNumOutEx(int x, int y, int val, unsigned long options)
+{
+	int color = (options == DRAW_OPT_NORMAL)? 1 : 0;
+	char str[10];
+	sprintf(str,"%d",val);
+	return LcdText(color, x, y, str);
+}
+
+char FloattNumOutEx(int x, int y, float val, unsigned long options)
+{
+	int color = (options == DRAW_OPT_NORMAL)? 1 : 0;
+	char str[10];
+	sprintf(str,"%f",val);
+	return LcdText(color, x, y, str);
+}
+
 /*******************
  * Redundant functions
  */
