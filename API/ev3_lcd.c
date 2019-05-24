@@ -24,6 +24,7 @@
 #include "ev3_lcd.h"
 #include "ev3_timer.h"
 #include <stdarg.h>
+#include <limits.h>
 
 #define DRAW_PIXELS_SET    0x00 //Basic options for pixel, line and shape drawing.
 #define DRAW_PIXELS_CLEAR  0x01
@@ -1632,11 +1633,6 @@ void CmdDrawCircle(int cx, int cy, int radius, uint8_t PixelMode, uint8_t FillMo
 void CmdDrawPoly(LocationType points[], unsigned int count, uint8_t PixelMode, uint8_t FillMode)
 {
 	int i;
-	for(i = 0; i < count ; i++){
-		LcdPrintf(1,"X : %d, Y : %d\n", points[i].X, points[i].Y);
-	}
-	Wait(SEC_2);
-	Ev3Clear();
 	for(i = 0; i < count; i++){
 		CmdDrawLine(points[i].X, points[i].Y, points[(i+1)%count].X, points[(i+1)%count].Y, PixelMode);
 	}
@@ -1702,6 +1698,28 @@ char PolyOutEx(LocationType points[], unsigned int count, unsigned long options)
 	if (CmdResolveDrawingMode(options, &pixelMode, &fillMode))
 		CmdDrawPoly(points, count, pixelMode, fillMode);
 	return 0;
+}
+
+char TextOutEx(int x, int y, char* str, unsigned long options)
+{
+	int color = (options == DRAW_OPT_NORMAL)? 1 : 0;
+	return LcdText(color, x, y, str);
+}
+
+char IntNumOutEx(int x, int y, int val, unsigned long options);
+{
+	int color = (options == DRAW_OPT_NORMAL)? 1 : 0;
+	char str[10];
+	sprintf(str,"%d",val);
+	return LcdText(color, x, y, str);
+}
+
+char IntNumOutEx(int x, int y, float val, unsigned long options);
+{
+	int color = (options == DRAW_OPT_NORMAL)? 1 : 0;
+	char str[10];
+	sprintf(str,"%f",val);
+	return LcdText(color, x, y, str);
 }
 
 /*******************
@@ -1959,3 +1977,4 @@ void Ev3Clear()
 	LcdClean();
 	LcdPrintf(1, "%s", "\f");
 }
+

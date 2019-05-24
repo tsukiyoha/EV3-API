@@ -157,7 +157,7 @@ void LcdWriteFrameBufferToFile(char* filename, ImageFormat fmt);
  */
 char CircleOutEx(int x, int y, uint8_t radius, unsigned long options);
 #define CircleOut(_x, _y, _r) CircleOutEx((_x), (_y), (_r), DRAW_OPT_NORMAL)
-
+#define CircleOut(_x, _y, _r, _opt) CircleOutEx((_x), (_y), (_r), (_opt))
 /**
  * Draw a line.
  * This function lets you draw a line on the screen from x1, y1 to x2, y2.
@@ -175,6 +175,7 @@ char CircleOutEx(int x, int y, uint8_t radius, unsigned long options);
  */
 char LineOutEx(int x1, int y1, int x2, int y2, unsigned long options);
 #define LineOut(_x1, _y1, _x2, _y2) LineOutEx((_x1), (_y1), (_x2), (_y2), DRAW_OPT_NORMAL)
+#define LineOut(_x1, _y1, _x2, _y2, _opt) LineOutEx((_x1), (_y1), (_x2), (_y2), (_opt))
 
 /**
  * Draw a point.
@@ -191,6 +192,7 @@ char LineOutEx(int x1, int y1, int x2, int y2, unsigned long options);
  */
 char PointOutEx(int x, int y, unsigned long options);
 #define PointOut(_x, _y) PointOutEx((_x), (_y), DRAW_OPT_NORMAL)
+#define PointOut(_x, _y, _opt) PointOutEx((_x), (_y), (_opt))
 
 /**
  * Draw a rectangle.
@@ -210,7 +212,7 @@ char PointOutEx(int x, int y, unsigned long options);
  */
 char RectOutEx(int x, int y, int width, int height, unsigned long options);
 #define RectOut(_x, _y, _w, _h) RectOutEx((_x), (_y), (_w), (_h), DRAW_OPT_NORMAL)
-
+#define RectOut(_x, _y, _w, _h, _opt) RectOutEx((_x), (_y), (_w), (_h), (_opt))
 
 /**
  * Draw an ellipse.
@@ -231,10 +233,11 @@ char RectOutEx(int x, int y, int width, int height, unsigned long options);
  */
 char EllipseOutEx(int x, int y, uint8_t radiusX, uint8_t radiusY, unsigned long options);
 #define EllipseOut(_x, _y, _rx, _ry) EllipseOutEx((_x), (_y), (_rx), (_ry), DRAW_OPT_NORMAL)
+#define EllipseOut(_x, _y, _rx, _ry, _opt) EllipseOutEx((_x), (_y), (_rx), (_ry), (_opt))
 
 /**
  * Draw a polygon.
- * This function lets you draw aa polygon on the screen using an array of points.
+ * This function lets you draw a polygon on the screen using an array of points.
  * Optionally specify drawing options. If this argument is not specified
  * it defaults to \ref DRAW_OPT_NORMAL.Valid display option constants are listed
  * in the \ref DisplayDrawOptionConstants group.
@@ -245,10 +248,78 @@ char EllipseOutEx(int x, int y, uint8_t radiusX, uint8_t radiusY, unsigned long 
  * \param points An array of LocationType points that define the polygon.
  * \param options The drawing options.
  * \return The result of the drawing operation.
-
  */
 char PolyOutEx(LocationType points[], unsigned int count, unsigned long options);
 #define PolyOut(_points, _count) PolyOutEx((_points), (_count), DRAW_OPT_NORMAL)
+
+/**
+ * Draw text.
+ * Draw a text value on the screen at the specified x and y location.
+ * 
+ * The y value must be a multiple of 8. Valid line number constants are
+ * listed in the Line number constants group.
+ * Optionally specify drawing options. If this argument is not specified
+ * it defaults to \ref DRAW_OPT_NORMAL.Valid display option constants are listed
+ * in the \ref DisplayDrawOptionConstants group.
+ * \sa SysDrawPolygon, DrawPolygonType
+ *
+ * \warning This function requires the enhanced NBC/NXC firmware version 1.28+.
+ *
+ * \param x The x value for the start of the text output.
+ * \param y The text line number for the text output.
+ * \param str The text to output to the LCD screen.
+ * \param options The drawing options.
+ * \return The result of the drawing operation.
+ */
+char TextOutEx(int x, int y, char* str, unsigned long options);
+#define TextOut(_x, _y, _str) TextOutEx((_x), (_y), (_str), DRAW_OPT_NORMAL)
+#define TextOut(_x, _y, _str, _opt) TextOutEx((_x), (_y), (_str), (_opt))
+
+/**
+ * Draw integer.
+ * Draw a integer value on the screen at the specified x and y location.
+ * 
+ * The y value must be a multiple of 8. Valid line number constants are
+ * listed in the Line number constants group.
+ * Optionally specify drawing options. If this argument is not specified
+ * it defaults to \ref DRAW_OPT_NORMAL.Valid display option constants are listed
+ * in the \ref DisplayDrawOptionConstants group.
+ * \sa SysDrawPolygon, DrawPolygonType
+ *
+ * \warning This function requires the enhanced NBC/NXC firmware version 1.28+.
+ *
+ * \param x The x value for the start of the text output.
+ * \param y The text line number for the text output.
+ * \param str The text to output to the LCD screen.
+ * \param options The drawing options.
+ * \return The result of the drawing operation.
+ */
+char IntNumOutEx(int x, int y, int val, unsigned long options);
+#define IntNumOut(_x, _y, _str) IntNumOutEx((_x), (_y), (_str), DRAW_OPT_NORMAL)
+#define IntNumOut(_x, _y, _str, _opt) IntNumOutEx((_x), (_y), (_str), (_opt))
+
+/**
+ * Draw integer.
+ * Draw a integer value on the screen at the specified x and y location.
+ * 
+ * The y value must be a multiple of 8. Valid line number constants are
+ * listed in the Line number constants group.
+ * Optionally specify drawing options. If this argument is not specified
+ * it defaults to \ref DRAW_OPT_NORMAL.Valid display option constants are listed
+ * in the \ref DisplayDrawOptionConstants group.
+ * \sa SysDrawPolygon, DrawPolygonType
+ *
+ * \warning This function requires the enhanced NBC/NXC firmware version 1.28+.
+ *
+ * \param x The x value for the start of the text output.
+ * \param y The text line number for the text output.
+ * \param str The text to output to the LCD screen.
+ * \param options The drawing options.
+ * \return The result of the drawing operation.
+ */
+char FloatNumOutEx(int x, int y, float val, unsigned long options);
+#define FloatNumOut(_x, _y, _str) FloatNumOutEx((_x), (_y), (_str), DRAW_OPT_NORMAL)
+#define FloatNumOut(_x, _y, _str, _opt) FloatNumOutEx((_x), (_y), (_str), (_opt))
 
 bool LcdTextf(char Color, short X, short Y, const char *fmt, ...);
 int LcdPrintf(char __color, const char * __fmt, ...);
@@ -275,6 +346,7 @@ int Ev3Println(const char *fmt, ...);
  * Clear the display and reset the cursor to the top left corner.
  */
 void Ev3Clear();
+#define ClearScreen() Ev3Clear()
 
 /**
  * Analog to Ev3Printf but automatically scrolls upwards to prevent 
@@ -287,6 +359,7 @@ int TermPrintf(const char *fmt, ...);
  * text from being out of bounds.
  */
 int TermPrintln(const char *fmt, ...);
+
 
 #endif // ev3_lcd_h
 
