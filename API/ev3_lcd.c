@@ -1652,6 +1652,10 @@ char CircleOutEx(int x, int y, uint8_t radius, unsigned long options)
 	return 0;
 }
 
+char CircleOut(int x, int y, uint8_t radius){
+	return CircleOutEx(x, y, radius, DRAW_OPT_NORMAL);
+}
+
 char LineOutEx(int x1, int y1, int x2, int y2, unsigned long options)
 {
 	if (!LcdInitialized())
@@ -1660,6 +1664,11 @@ char LineOutEx(int x1, int y1, int x2, int y2, unsigned long options)
 	if (CmdResolveDrawingMode(options, &pixelMode, &fillMode))
 		CmdDrawLine(x1, y1, x2, y2, pixelMode);
 	return 0;
+}
+
+char LineOut(int x1, int y1, int x2, int y2)
+{
+	return LineOutEx(x1, y1, x2, y2, DRAW_OPT_NORMAL);
 }
 
 char PointOutEx(int x, int y, unsigned long options)
@@ -1672,6 +1681,16 @@ char PointOutEx(int x, int y, unsigned long options)
 	return 0;
 }
 
+char setPixel(int x, int y)
+{
+	return PointOutEx(x, y, DRAW_OPT_NORMAL);
+}
+
+char PointOut(int x, int y)
+{
+	return PointOutEx(x, y, DRAW_OPT_NORMAL);
+}
+
 char RectOutEx(int x, int y, int width, int height, unsigned long options)
 {
 	if (!LcdInitialized())
@@ -1680,6 +1699,11 @@ char RectOutEx(int x, int y, int width, int height, unsigned long options)
 	if (CmdResolveDrawingMode(options, &pixelMode, &fillMode))
 		CmdDrawRect(x, y, width, height, pixelMode, fillMode);
 	return 0;
+}
+
+char RectOut(int x, int y, int width, int height)
+{
+	return RectOutEx(x, y, width, height, DRAW_OPT_NORMAL);
 }
 
 char EllipseOutEx(int x, int y, uint8_t radiusX, uint8_t radiusY, unsigned long options)
@@ -1692,6 +1716,11 @@ char EllipseOutEx(int x, int y, uint8_t radiusX, uint8_t radiusY, unsigned long 
 	return 0;
 }
 
+char EllipseOut(int x, int y, uint8_t radiusX, uint8_t radiusY)
+{
+	return EllipseOutEx(x, y, radiusX, radiusY, DRAW_OPT_NORMAL);
+}
+
 char PolyOutEx(LocationType points[], unsigned int count, unsigned long options)
 {
 	if (!LcdInitialized())
@@ -1702,6 +1731,11 @@ char PolyOutEx(LocationType points[], unsigned int count, unsigned long options)
 	if (CmdResolveDrawingMode(options, &pixelMode, &fillMode))
 		CmdDrawPoly(points, count, pixelMode, fillMode);
 	return 0;
+}
+
+char PolyOut(LocationType points[], unsigned int count)
+{
+	return PolyOutEx(points, count, DRAW_OPT_NORMAL);
 }
 
 char TextOutEx(int x, int y, char* str, unsigned long options)
@@ -1867,6 +1901,34 @@ int LcdPrintf(char color, const char *fmt, ...)
     return c - buf;
 }
 
+void displayText( short X, short Y, const char *fmt, ...)
+{
+	int ret;
+	(void) ret; // do something with this!
+	va_list ap;
+	char *buf;
+
+	va_start(ap, fmt);
+	ret = vasprintf(&buf, fmt, ap);
+	va_end(ap);
+
+	LcdText(1, X, Y, buf);
+}
+
+void displayTextLine(const int nLineNumber, const char *fmt, ...)
+{
+int ret;
+	(void) ret; // do something with this!
+	va_list ap;
+	char *buf;
+
+	va_start(ap, fmt);
+	ret = vasprintf(&buf, fmt, ap);
+	va_end(ap);
+
+	LcdText(1, 0, 8*nLineNumber, buf);
+}
+
 int Ev3Printf(const char *fmt, ...)
 {
 	va_list args;
@@ -1980,4 +2042,14 @@ void Ev3Clear()
 {
 	LcdClean();
 	LcdPrintf(1, "%s", "\f");
+}
+
+void eraseDisplay()
+{
+	Ev3Clear();
+}
+
+bool drawBmpfile(short X, short Y, char* Name)
+{
+	return LcdBmpFile(1, X, Y, Name);
 }

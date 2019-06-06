@@ -156,7 +156,23 @@ void LcdWriteFrameBufferToFile(char* filename, ImageFormat fmt);
  * \return The result of the drawing operation.
  */
 char CircleOutEx(int x, int y, uint8_t radius, unsigned long options);
-#define CircleOut(_x, _y, _r) CircleOutEx((_x), (_y), (_r), DRAW_OPT_NORMAL)
+
+/**
+ * Draw a circle, Wrapper for the function CircleOutEx.
+ * This function lets you draw a circle on the screen with its center at the
+ * specified x and y location, using the specified radius. Optionally specify
+ * drawing options. If this argument is not specified it defaults to \ref DRAW_OPT_NORMAL.
+ * Valid display option constants are listed in the \ref DisplayDrawOptionConstants group.
+ * \sa SysDrawCircle, DrawCircleType
+ *
+ * \param x The x value for the center of the circle.
+ * \param y The y value for the center of the circle.
+
+ * \param radius The radius of the circle.
+ * \param options The drawing options.
+ * \return The result of the drawing operation.
+ */
+char CircleOut(int x, int y, uint8_t radius);
 
 /**
  * Draw a line.
@@ -174,7 +190,23 @@ char CircleOutEx(int x, int y, uint8_t radius, unsigned long options);
  * \return The result of the drawing operation.
  */
 char LineOutEx(int x1, int y1, int x2, int y2, unsigned long options);
-#define LineOut(_x1, _y1, _x2, _y2) LineOutEx((_x1), (_y1), (_x2), (_y2), DRAW_OPT_NORMAL)
+
+/**
+ * Draw a line, Wrapper for the function LineOutEx.
+ * This function lets you draw a line on the screen from x1, y1 to x2, y2.
+ * Optionally specify drawing options. If this argument is not specified it
+ * defaults to \ref DRAW_OPT_NORMAL. Valid display option constants are listed in
+ * the \ref DisplayDrawOptionConstants group.
+ * \sa SysDrawLine, DrawLineType
+ *
+ * \param x1 The x value for the start of the line.
+ * \param y1 The y value for the start of the line.
+ * \param x2 The x value for the end of the line.
+ * \param y2 The y value for the end of the line.
+ * \param options The drawing options.
+ * \return The result of the drawing operation.
+ */
+char LineOut(int x1, int y1, int x2, int y2);
 
 /**
  * Draw a point.
@@ -190,7 +222,38 @@ char LineOutEx(int x1, int y1, int x2, int y2, unsigned long options);
  * \return The result of the drawing operation.
  */
 char PointOutEx(int x, int y, unsigned long options);
-#define PointOut(_x, _y) PointOutEx((_x), (_y), DRAW_OPT_NORMAL)
+
+/**
+ * Draw a point, Wrapper for the function PointOutEx.
+ * This function lets you draw a point on the screen at x, y.
+ * Optionally specify drawing options. If this argument is not specified it
+
+ * defaults to \ref DRAW_OPT_NORMAL. Valid display option constants are listed in
+ * the \ref DisplayDrawOptionConstants group.
+ * \sa SysDrawPoint, DrawPointType
+ *
+ * \param x The x value for the point.
+ * \param y The y value for the point.
+ * \param options The drawing options.
+ * \return The result of the drawing operation.
+ */
+char PointOut(int x, int y);
+
+/**
+ * Draw a point, second wrapper for the function PointOutEx.
+ * This function lets you draw a point on the screen at x, y.
+ * Optionally specify drawing options. If this argument is not specified it
+
+ * defaults to \ref DRAW_OPT_NORMAL. Valid display option constants are listed in
+ * the \ref DisplayDrawOptionConstants group.
+ * \sa SysDrawPoint, DrawPointType
+ *
+ * \param x The x value for the point.
+ * \param y The y value for the point.
+ * \param options The drawing options.
+ * \return The result of the drawing operation.
+ */
+char setPixel(int x, int y);
 
 /**
  * Draw a rectangle.
@@ -209,7 +272,24 @@ char PointOutEx(int x, int y, unsigned long options);
  * \return The result of the drawing operation.
  */
 char RectOutEx(int x, int y, int width, int height, unsigned long options);
-#define RectOut(_x, _y, _w, _h) RectOutEx((_x), (_y), (_w), (_h), DRAW_OPT_NORMAL)
+
+/**
+ * Draw a rectangle, Wrapper for the function RectOutEx.
+ * This function lets you draw a rectangle on the screen at x, y with the
+ * specified width and height.
+ * Optionally specify drawing options. If this argument is not specified it
+ * defaults to \ref DRAW_OPT_NORMAL. Valid display option constants are listed in
+ * the \ref DisplayDrawOptionConstants group.
+ * \sa SysDrawRect, DrawRectType
+ *
+ * \param x The x value for the top left corner of the rectangle.
+ * \param y The y value for the top left corner of the rectangle.
+ * \param width The width of the rectangle.
+ * \param height The height of the rectangle.
+ * \param options The drawing options.
+ * \return The result of the drawing operation.
+ */
+char RectOut(int x, int y, int width, int height);
 
 
 /**
@@ -230,7 +310,26 @@ char RectOutEx(int x, int y, int width, int height, unsigned long options);
  * \return The result of the drawing operation.
  */
 char EllipseOutEx(int x, int y, uint8_t radiusX, uint8_t radiusY, unsigned long options);
-#define EllipseOut(_x, _y, _rx, _ry) EllipseOutEx((_x), (_y), (_rx), (_ry), DRAW_OPT_NORMAL)
+
+/**
+ * Draw an ellipse, Wrapper for the function EllipseOutEx.
+ * This function lets you draw an ellipse on the screen with its center at the
+ * specified x and y location, using the specified radii. Optionally specify
+ * drawing options. If this argument is not specified it defaults to \ref DRAW_OPT_NORMAL.
+ * Valid display option constants are listed in the \ref DisplayDrawOptionConstants group.
+ * \sa SysDrawEllipse, DrawEllipseType
+ *
+ * \warning This function requires the enhanced NBC/NXC firmware version 1.28+.
+ *
+ * \param x The x value for the center of the ellipse.
+ * \param y The y value for the center of the ellipse.
+ * \param radiusX The x axis radius.
+ * \param radiusY The y axis radius.
+ * \param options The drawing options.
+ * \return The result of the drawing operation.
+ */
+
+char EllipseOut(int x, int y, uint8_t radiusX, uint8_t radiusY);
 
 /**
  * Draw a polygon.
@@ -248,10 +347,61 @@ char EllipseOutEx(int x, int y, uint8_t radiusX, uint8_t radiusY, unsigned long 
 
  */
 char PolyOutEx(LocationType points[], unsigned int count, unsigned long options);
-#define PolyOut(_points, _count) PolyOutEx((_points), (_count), DRAW_OPT_NORMAL)
+
+/**
+ * Draw a polygon, Wrapper for the function PolyOutEx.
+ * This function lets you draw a polygon on the screen using an array of points.
+ * Optionally specify drawing options. If this argument is not specified
+
+ * it defaults to \ref DRAW_OPT_NORMAL.Valid display option constants are listed
+ * in the \ref DisplayDrawOptionConstants group.
+ * \sa SysDrawPolygon, DrawPolygonType
+ *
+ * \warning This function requires the enhanced NBC/NXC firmware version 1.28+.
+ *
+ * \param points An array of LocationType points that define the polygon.
+ * \param options The drawing options.
+ * \return The result of the drawing operation.
+
+ */
+char PolyOut(LocationType points[], unsigned int count);
 
 bool LcdTextf(char Color, short X, short Y, const char *fmt, ...);
 int LcdPrintf(char __color, const char * __fmt, ...);
+
+/**
+ * Print a formated string.
+ * This function lets you print a string on the screen at x, y.
+ * RobotC wrapper.
+ * \sa LcdTexf
+ *
+ * \warning This function requires the enhanced NBC/NXC firmware version 1.28+.
+ *
+ * \param x The x value for the string.
+ * \param y The y value for the string.
+ * \param fmt the formated string
+ * \param ... parameters
+ * \return None.
+
+ */
+void displayText( short X, short Y, const char *fmt, ...);
+
+/**
+ * Print a formated string.
+ * This function lets you print a string on the screen at the specified line.
+ * RobotC wrapper.
+ * \sa LcdTexf
+ *
+ * \warning This function requires the enhanced NBC/NXC firmware version 1.28+.
+ *
+ * \param x The x value for the string.
+ * \param y The y value for the string.
+ * \param fmt the formated string
+ * \param ... parameters
+ * \return None.
+
+ */
+void displayTextLine(const int nLineNumber, const char *fmt, ...);
 
 #ifdef __ASPRINTF
 #include <stdarg.h>
@@ -277,6 +427,12 @@ int Ev3Println(const char *fmt, ...);
 void Ev3Clear();
 
 /**
+ * Clear the display and reset the cursor to the top left corner.
+ * Wrapper for the function Ev3Clear
+ */
+void eraseDisplay();
+
+/**
  * Analog to Ev3Printf but automatically scrolls upwards to prevent 
  * text from being out of bounds.
  */
@@ -287,6 +443,22 @@ int TermPrintf(const char *fmt, ...);
  * text from being out of bounds.
  */
 int TermPrintln(const char *fmt, ...);
+
+/**
+ * Draw a BMP picture.
+ * This function lets you draw a BMP picture on the screen at x, y.
+ * RobotC wrapper.
+ * \sa LcdBmpFile
+ *
+ * \warning This function requires the enhanced NBC/NXC firmware version 1.28+.
+ *
+ * \param x The x value for the string.
+ * \param y The y value for the string.
+ * \param Name path of the picture file.
+ *
+ * \return boolean.
+ */
+bool drawBmpfile(short X, short Y, char* Name);
 
 #endif // ev3_lcd_h
 
