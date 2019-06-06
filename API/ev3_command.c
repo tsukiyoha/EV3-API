@@ -31,3 +31,28 @@ void Wait(unsigned long ms)
 	while (nanosleep(&delay, &delay));
 }
 
+
+long fileOpenWrite(const char *pzFileName, int nFlags)
+{
+	return open(psFileName,Flags | O_CREAT ,S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+}
+
+bool fileWriteData(long nFileDescriptor, char *pData, long nWriteLen)
+{
+	int writtenData = 0;
+	
+	if(!pData) return 0;
+	
+	writtenData = write nFileDescriptor, pData, wWriteLen);
+	
+	return (writtenData > 0)? true : false;
+}
+
+bool fileClose(long nFileDescriptor)
+{
+	int result;
+	
+	result = close(nFileDescriptor);
+	
+	return (result == 0)? true : false;
+}

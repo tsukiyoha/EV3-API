@@ -35,12 +35,57 @@ extern "C" {
 
 #include <unistd.h>
 #include <sys/time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <signal.h>
 #include <string.h>
+#include <fcntl.h>
 
 #include "ev3_constants.h"
 
 void Wait(unsigned long ms);
+//#define sleep(_ms) Wait(_ms)
+
+/**
+ * Open a file.
+ * This function lets you open a file and return an handler.
+ * 
+ * RobotC-like Wrapper.
+ * \sa SetLedPattern
+ *
+ * \param pzFileName Name of the file.
+ * \param nFlags Flags and mode to open file.
+ * \return File handler.
+ */
+//FONCTION qui ouvre le fichier en écriture et retourne le handler
+long fileOpenWrite(const char *pzFileName, int nFlags);
+
+/**
+ * Write data in a file.
+ * This function lets you write a buffer of data into the specified file.
+ * RobotC-like Wrapper.
+ * \sa SetLedPattern
+ *
+ * \param nFileDescriptor File Handler.
+ * \param pData Writing buffer.
+ * \param nWriteLen Size of buffer.
+ * \return Result of the operation.
+ */
+/*FONCTION qui écrit la chaîne de caractères à partir de l'adresse pData
+dans le fichier caractérisé par le handler nFileDescriptor*/
+bool fileWriteData(long nFileDescriptor, char *pData, long nWriteLen);
+
+/**
+ * Close a file.
+ * This function lets you close a file.
+ * RobotC-like Wrapper.
+ * \sa SetLedPattern
+ *
+ * \param nFileDescriptor File handler.
+ * \return Result of the operation.
+ */
+//FONCTION qui ferme l'accès au fichier grâce au handler en paramètre
+bool fileClose(long nFileDescriptor);
 
 #endif // ev3_command_h
 
