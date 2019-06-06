@@ -11,13 +11,14 @@ AR = $(PREFIX)ar
 SRCS = $(wildcard *.c)
 OBJS = $(patsubst %.c,%.o,$(SRCS))
 CFLAGS += -fno-strict-aliasing
+LDFLAGS += -lpthread
 
 .DEFAULT: libev3api.a
 libev3api.a: $(OBJS)
 	$(AR) rcs $@ $^
 
 %.o: %.c
-	$(CC) -Os $(CFLAGS) -isystem. -c $<
+	$(CC) -Os $(CFLAGS) $(LDFLAGS) -isystem. -c $<
 
 example:
 	echo 'int main(void) { return EV3IsInitialized() == 1; }' | $(CC) -xc $(CFLAGS) - -L. -lev3api -I. -oexample -include ev3.h
