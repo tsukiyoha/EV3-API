@@ -96,6 +96,29 @@ char ReadButtonEx(uint8_t btn, bool reset, bool* pressed, uint16_t* count);
 
 uint8_t ButtonState(uint8_t btn);
 
+/**
+ * Set the color of the LED.
+ * This function lets you set the color of the LED under the buttons.
+ * RobotC Wrapper.
+ * \sa SetLedPattern
+ *
+ * \param pattern Color (or mode) of LED.
+ * \return None.
+ */
+void setLEDColor(const uint8_t Pattern);
+
+/**
+ * Return the state of a button.
+ * This function return the state of a button.
+ * See Buttons constants
+ * RobotC Wrapper.
+ * \sa ButtonIsDown
+ *
+ * \param button Button checked.
+ * \return State of the button. True if the button is pressed and false otherwise.
+ */
+bool getButtonPress(const uint8_t button);
+
 #endif // ev3_button_h
 
 #ifdef __cplusplus

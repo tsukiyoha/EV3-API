@@ -422,3 +422,38 @@ uint8_t ButtonState(uint8_t btn)
 		return BTNSTATE_NONE;
 }
 
+void setLEDColor(const uint8_t Pattern)
+{
+	SetLedPattern(Pattern);
+}
+
+bool getButtonPress(const uint8_t button)
+{
+	bool state = 0;
+	switch(button){
+		case BTNEXIT:
+			state = ButtonIsDown(BTNEXIT);
+			break;
+		case BTNRIGHT:
+			state = ButtonIsDown(BTNRIGHT);
+			break;
+		case BTNLEFT:
+			state = ButtonIsDown(BTNLEFT);
+			break;
+		case BTNCENTER:
+			state = ButtonIsDown(BTNCENTER);
+			break;
+		case BTNUP:
+			state = ButtonIsDown(BTNUP);
+			break;
+		case BTNDOWN:
+			state = ButtonIsDown(BTNDOWN);
+			break;
+		case BTNANY:
+			state = ButtonIsDown(BTNEXIT) || ButtonIsDown(BTNDOWN) || ButtonIsDown(BTNUP) || ButtonIsDown(BTNCENTER) || ButtonIsDown(BTNRIGHT) || ButtonIsDown(BTNEXIT);
+			break;
+		default	:
+			return 0;
+	}
+	return state;
+}
