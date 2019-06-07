@@ -112,6 +112,44 @@ void UnmuteSound();
 
 void ClearSound();
 
+/**
+ * Set the volume.
+ * This function allows you to set the sound volume of the EV3
+ *
+ * \param volume The volume of tones to play.
+ */
+void setSoundVolume(uint8_t volume);
+
+/**
+ * Play a tone.
+ * Play a single tone of the specified frequency and duration.
+ * The frequency is in Hz (see the \ref Tone constants group).
+ * The duration is in 1000ths of a second (see the \ref Time constants group).
+ * The tone is played at the loudest sound level supported by the firmware and it is not looped.
+ *
+ * \param frequency The desired tone frequency, in Hz. 
+ * \param durationIn10MsecTicks The desired tone duration, in ms.
+ */
+void playTone(int frequency, int durationIn10MsecTicks);
+
+/**
+ * Play a file.
+ * Play the specified file. The filename may be any valid string expression. 
+ * The sound file can either be an RSO file containing PCM or compressed ADPCM samples
+ * or it can be an NXT melody (RMD) file containing frequency and duration values.
+ *
+ * \param filename The name of the sound or melody file to play.
+ */
+void playSoundFile(char *filename);
+
+/**
+ * Stop sound.
+ * Stop playing of the current tone or file.
+ * Synonym for ClearSound
+ *
+ */
+void clearSounds();
+
 #endif // ev3_sound_h
 
 #ifdef __cplusplus

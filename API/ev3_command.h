@@ -40,6 +40,7 @@ extern "C" {
 #include <signal.h>
 #include <string.h>
 #include <fcntl.h>
+#include <stdbool.h>
 
 #include "ev3_constants.h"
 
@@ -57,7 +58,6 @@ void Wait(unsigned long ms);
  * \param nFlags Flags and mode to open file.
  * \return File handler.
  */
-//FONCTION qui ouvre le fichier en écriture et retourne le handler
 long fileOpenWrite(const char *pzFileName, int nFlags);
 
 /**
@@ -71,8 +71,6 @@ long fileOpenWrite(const char *pzFileName, int nFlags);
  * \param nWriteLen Size of buffer.
  * \return Result of the operation.
  */
-/*FONCTION qui écrit la chaîne de caractères à partir de l'adresse pData
-dans le fichier caractérisé par le handler nFileDescriptor*/
 bool fileWriteData(long nFileDescriptor, char *pData, long nWriteLen);
 
 /**
@@ -84,7 +82,6 @@ bool fileWriteData(long nFileDescriptor, char *pData, long nWriteLen);
  * \param nFileDescriptor File handler.
  * \return Result of the operation.
  */
-//FONCTION qui ferme l'accès au fichier grâce au handler en paramètre
 bool fileClose(long nFileDescriptor);
 
 #endif // ev3_command_h

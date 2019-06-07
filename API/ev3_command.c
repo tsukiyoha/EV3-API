@@ -34,7 +34,7 @@ void Wait(unsigned long ms)
 
 long fileOpenWrite(const char *pzFileName, int nFlags)
 {
-	return open(psFileName,Flags | O_CREAT ,S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+	return open(pzFileName,nFlags | O_CREAT ,S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 }
 
 bool fileWriteData(long nFileDescriptor, char *pData, long nWriteLen)
@@ -43,7 +43,7 @@ bool fileWriteData(long nFileDescriptor, char *pData, long nWriteLen)
 	
 	if(!pData) return 0;
 	
-	writtenData = write nFileDescriptor, pData, wWriteLen);
+	writtenData = write(nFileDescriptor, pData, nWriteLen);
 	
 	return (writtenData > 0)? true : false;
 }

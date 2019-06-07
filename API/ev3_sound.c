@@ -61,6 +61,8 @@ const short IndexTable[INDEX_TABLE_ENTRIES] = {
 		-1, -1, -1, -1, 2, 4, 6, 8
 };
 
+int globalVolume = 50;
+
 typedef struct {
 	uint8_t Busy;
 } SOUND_BUSY;
@@ -708,6 +710,35 @@ void UnmuteSound()
 void ClearSound()
 {
 	// a synonym for StopSound;
+	StopSound();
+}
+
+void setSoundVolume(uint8_t volume)
+{
+	if(volume < 0){
+		globalVolume = 0;
+	}
+	else if(volume > 100){
+		globalVolume = 100;
+	}
+	else{
+		globalVolume = volume;
+	}
+	return;
+}
+
+void playTone(int frequency, int durationIn10MsecTicks)
+{
+	
+}
+
+void playSoundFile(char *filename)
+{
+	
+}
+
+void clearSounds()
+{
 	StopSound();
 }
 
