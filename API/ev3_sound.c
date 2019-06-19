@@ -61,7 +61,7 @@ const short IndexTable[INDEX_TABLE_ENTRIES] = {
 		-1, -1, -1, -1, 2, 4, 6, 8
 };
 
-int globalVolume = 50;
+extern int globalVolume = 50;
 
 typedef struct {
 	uint8_t Busy;
@@ -729,12 +729,12 @@ void setSoundVolume(uint8_t volume)
 
 void playTone(int frequency, int durationIn10MsecTicks)
 {
-	
+	PlayToneEx(frequency, durationIn10MsecTicks, globalVolume);
 }
 
 void playSoundFile(char *filename)
 {
-	
+	PlayFileEx(FileName, globalColume,0);
 }
 
 void clearSounds()

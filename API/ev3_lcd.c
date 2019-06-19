@@ -1632,11 +1632,6 @@ void CmdDrawCircle(int cx, int cy, int radius, uint8_t PixelMode, uint8_t FillMo
 void CmdDrawPoly(LocationType points[], unsigned int count, uint8_t PixelMode, uint8_t FillMode)
 {
 	int i;
-	for(i = 0; i < count ; i++){
-		LcdPrintf(1,"X : %d, Y : %d\n", points[i].X, points[i].Y);
-	}
-	Wait(SEC_2);
-	Ev3Clear();
 	for(i = 0; i < count; i++){
 		CmdDrawLine(points[i].X, points[i].Y, points[(i+1)%count].X, points[(i+1)%count].Y, PixelMode);
 	}

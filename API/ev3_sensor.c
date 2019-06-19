@@ -94,6 +94,9 @@ ANALOG* g_analogSensors = 0;
 int sensor_setup_NAME[INPUTS];
 int ir_sensor_channel[INPUTS];
 
+//give access to sensor type outside of the module. RobotC Wrapper.
+extern int *SensorType = sensor_setup_NAME;
+
 /********************************************************************************************/
 /**
 * Initialisation of the Sensorfunctions
@@ -277,17 +280,18 @@ void* ReadSensorData(int sensorPort)
 		/* HiTechnic */
 			/* COMPASS_SENSOR */
 		case COMPASS_SENSOR_HIT:
-            		return readIicSensor(sensorPort);
-            		/* GYRO_SENSOR */
+    		return readIicSensor(sensorPort);
+    		/* GYRO_SENSOR */
 		case GYRO_SENSOR_HIT:
 			return readOldDumbSensor(sensorPort);
 			/* ANGLE_SENSOR */
 		case ANGLE_SENSOR_HIT:
-            		return ReadAngleSensor(sensorPort);
-            		//return readIicSensor(sensorPort);
-            	case BARO_SENSOR_HIT:
-            		return ReadAngleSensor(sensorPort);
-            		//return readIicSensor(sensorPort);
+    		return ReadAngleSensor(sensorPort);
+			//return readIicSensor(sensorPort);
+    		/* BARO_SENSOR */
+    	case BARO_SENSOR_HIT:
+    		return ReadAngleSensor(sensorPort);
+    		//return readIicSensor(sensorPort);
 		default: return 0;
 	}
 
@@ -634,6 +638,7 @@ void* ReadAngleSensor(int sensorPort)
 		return 0;
 	uint16_t currentSensorSlot = g_iicSensors->Actual[sensorPort];
 	uint64_t* data = (uint64_t *)g_iicSensors->Raw[sensorPort][currentSensorSlot];
+	uint64_t d = *data;
 	
 	LcdPrintf(1,"octet 0: %d\n", *(data) & 0xFF);
 	LcdPrintf(1,"octet 1: %d\n", (*(data)>>8) & 0xFF);
@@ -643,7 +648,13 @@ void* ReadAngleSensor(int sensorPort)
 	LcdPrintf(1,"octet 5: %d\n", (*(data)>>40) & 0xFF);
 	LcdPrintf(1,"octet 6: %d\n", (*(data)>>48) & 0xFF);
 	LcdPrintf(1,"octet 7: %d\n", (*(data)>>56) & 0xFF);
+	
 	return g_iicSensors->Raw[sensorPort][currentSensorSlot];
 	
 }
 
+
+int getIICFile(void)
+{
+	return g_iicFile;
+}

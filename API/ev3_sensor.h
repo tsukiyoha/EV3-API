@@ -86,6 +86,7 @@ int SetIRBeaconCH(int sensorPort, int channel);
 */
 void* ReadAngleSensor(int sensorPort);
 
+int getIICFile(void);
 /***********************************/
 // Sensor Names
 #define NO_SEN -1		// No sensor connected
